@@ -1,4 +1,4 @@
-package SatProblem;
+package Problemes.SatProblem;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -38,7 +38,7 @@ public class Instance {
             if(line.length()>0 && line.charAt(0) == ' ')
                 line = line.substring(1);
 
-            String sLine[] = line.split("\\s+");
+            String[] sLine = line.split("\\s+");
             for (int j = 0; j < sLine.length - 1; j++) {
                 int i1 = Integer.parseInt(sLine[j]);
                 se.literals[(i1 > 0)?1:0][Math.abs(i1)-1].set(i);

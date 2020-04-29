@@ -1,8 +1,7 @@
 package Solvers.PSO;
 
-import Problems.Problem;
-import Problems.Solution;
-import SatProblem.SatSolution;
+import AbstractProblems.Problem;
+import AbstractProblems.Solution;
 
 import java.util.HashMap;
 import java.util.LinkedList;

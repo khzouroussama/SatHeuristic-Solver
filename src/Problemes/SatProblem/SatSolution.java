@@ -1,7 +1,7 @@
-package SatProblem;
+package Problemes.SatProblem;
 
-import Problems.Problem;
-import Problems.Solution;
+import AbstractProblems.Problem;
+import AbstractProblems.Solution;
 
 import java.util.BitSet;
 import java.util.Random;
@@ -29,14 +29,14 @@ public class SatSolution extends Solution<BitSet ,Instance> {
 
     /**
      * fitness of sat is nb of sat clauses
-     * @param p
+     * @param problem
      * @return fitness value to MAXIMIZE
      */
     @Override
-    public int Fitness(Problem<Instance, BitSet> p) {
-        BitSet satisfied = new BitSet(p.SOLUTION_SIZE);
+    public int Fitness(Problem<Instance, BitSet> problem) {
+        BitSet satisfied = new BitSet(problem.SOLUTION_SIZE);
         for (int i = 0; i < getValue().length(); i++)
-                satisfied.or(p.getInstance().getLiterals()[getValue().get(i) ? 1 : 0][i]);
+                satisfied.or(problem.getInstance().getLiterals()[getValue().get(i) ? 1 : 0][i]);
         return satisfied.cardinality();
     }
 

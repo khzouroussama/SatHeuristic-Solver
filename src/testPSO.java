@@ -1,28 +1,25 @@
-import Problems.Problem;
-import Problems.Solution;
-import SatProblem.Instance;
-import SatProblem.SatProblem;
-import SatProblem.SatSolution;
+import AbstractProblems.Solution;
+import Problemes.SatProblem.Instance;
+import Problemes.SatProblem.SatProblem;
+import Problemes.SatProblem.SatSolution;
 import Solvers.PSO.PSO;
 
 import java.io.IOException;
-import java.util.BitSet;
 import java.util.HashMap;
-import java.util.LinkedList;
 
 public class testPSO {
 
     public static void main(String[] args) throws IOException {
 
         SatProblem satProblem = new SatProblem(
-                Instance.fromDIMACS("/home/oussama/IdeaProjects/SatHeuristicSolver/src/SatProblem/Benchmarks/test.cnf")
+                Instance.fromDIMACS("/home/oussama/IdeaProjects/SatHeuristicSolver/src/Problemes/SatProblem/Benchmarks/test1.cnf")
         );
 
         System.out.println(satProblem.getInstance().getNbVars() + "// " + satProblem.getInstance().getNbClauses());
         PSO<Instance , SatSolution > psoSolver = new PSO<>(satProblem) ;
 
         Solution<SatSolution, Instance> solution = psoSolver.PSOSolve(
-                new HashMap<> (){{
+                new HashMap<String, Double>(){{
                     put("numParticles", (double) 1000) ;
                     put("maxIter", (double) 100) ;
                     put("c1", 1.4  ) ;

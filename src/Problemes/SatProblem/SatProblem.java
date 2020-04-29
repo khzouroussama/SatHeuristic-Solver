@@ -1,7 +1,7 @@
-package SatProblem;
+package Problemes.SatProblem;
 
-import Problems.Problem;
-import Problems.Solution;
+import AbstractProblems.Problem;
+import AbstractProblems.Solution;
 
 import java.util.BitSet;
 
