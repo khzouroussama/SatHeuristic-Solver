@@ -10,33 +10,38 @@ import java.util.Random;
 public class SatSolution extends Solution<BitSet ,Instance> {
 
 
-    public SatSolution(BitSet solution) {
-        super(solution);
+    public SatSolution(SatProblem problem) {
+        super(new BitSet(problem.SOLUTION_SIZE) , problem);
     }
 
     @Override
-    public Solution<BitSet, Instance> randomSolution(Problem<Instance, BitSet> p) {
-        SatSolution s = new SatSolution(new BitSet(p.SOLUTION_SIZE)) ;
-        for (int i = 0; i < p.SOLUTION_SIZE; i++)
+    public Solution<BitSet, Instance> getEmptySolution() {
+        return new SatSolution((SatProblem) getProblem());
+    }
+
+    @Override
+    public Solution<BitSet, Instance> randomSolution() {
+        SatSolution s = new SatSolution((SatProblem) getProblem()) ;
+        for (int i = 0; i < getProblem().SOLUTION_SIZE; i++)
             if (new Random().nextBoolean()) s.getValue().flip(i);
         return s;
     }
 
     @Override
-    public boolean isSolution(Problem<Instance, BitSet> p) {
-        return p.getInstance().getNbClauses() - Fitness(p)   == 0;
+    public boolean isSolution() {
+        return getProblem().getInstance().getNbClauses() == Fitness() ;
     }
 
     /**
      * fitness of sat is nb of sat clauses
-     * @param problem
      * @return fitness value to MAXIMIZE
      */
     @Override
-    public int Fitness(Problem<Instance, BitSet> problem) {
-        BitSet satisfied = new BitSet(problem.SOLUTION_SIZE);
-        for (int i = 0; i < getValue().length(); i++)
-                satisfied.or(problem.getInstance().getLiterals()[getValue().get(i) ? 1 : 0][i]);
+    public int Fitness() {
+        BitSet satisfied = new BitSet(getProblem().getInstance().getNbClauses());
+        satisfied.clear();
+        for (int i = 0; i < getProblem().SOLUTION_SIZE; i++)
+            satisfied.or(getProblem().getInstance().getLiterals()[getValue().get(i) ? 1 : 0][i]);
         return satisfied.cardinality();
     }
 
@@ -47,7 +52,7 @@ public class SatSolution extends Solution<BitSet ,Instance> {
      */
     @Override
     public int Distance(Solution<BitSet, Instance> s) {
-        BitSet distance = copy().getValue() ;
+        BitSet distance = copy().getValue()  ;
         distance.xor(s.getValue());
         return distance.cardinality();
     }
@@ -66,9 +71,12 @@ public class SatSolution extends Solution<BitSet ,Instance> {
         return String.valueOf(s);
     }
 
-    private SatSolution copy() {
-        BitSet copyBS = new BitSet(getValue().length()) ;
-        copyBS.or(getValue());
-        return new SatSolution(copyBS);
+    @Override
+    public SatSolution copy() {
+        SatSolution copyBS = new SatSolution((SatProblem) getProblem());
+        copyBS.getValue().clear();
+        copyBS.getValue().or(getValue());
+        return copyBS;
     }
+
 }

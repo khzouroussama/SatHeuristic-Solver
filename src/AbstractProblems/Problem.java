@@ -3,9 +3,8 @@ package AbstractProblems;
 /**
  *
  * @param <T> type of problem (list of clauses in SAT for exemple)
- * @param <S> type of solution
  */
-public abstract class Problem <T, S> {
+public abstract class Problem <T> {
 
     private T instance ;
     long search_space ;
@@ -14,10 +13,6 @@ public abstract class Problem <T, S> {
     public Problem(T instance ) {
         this.instance = instance;
     }
-
-
-    abstract public Solution<S, T> getEmptySolution() ;
-
 
     public void setSOLUTION_SIZE(int SOLUTION_SIZE) {
         this.SOLUTION_SIZE = SOLUTION_SIZE;

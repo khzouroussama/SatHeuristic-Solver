@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="SatHeuristicSolver:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/SatHeuristicSolver_jar</output-path>
+    <root id="archive" name="SatHeuristicSolver.jar">
+      <element id="module-output" name="SatHeuristicSolver" />
+    </root>
+  </artifact>
+</component>
