@@ -1,14 +1,12 @@
 package Problemes.SatProblem;
 
-import AbstractProblems.Solution;
-import Problemes.SatProblem.Instance;
-import Problemes.SatProblem.SatProblem;
-import Problemes.SatProblem.SatSolution;
 import Solvers.BSO.Bso;
+import Solvers.GA.GAAlgorithm;
+import Solvers.GA.GAClauses;
+import Solvers.GA.GASolution;
 import Solvers.PSO.PSO;
 
 import java.io.IOException;
-import java.util.BitSet;
 import java.util.HashMap;
 
 
@@ -76,6 +74,29 @@ public class SolveSat {
                                     " \"fitness\" : " +  b_sol.Fitness()   +'\n'+
                                     "} "
                     );
+                }
+                System.out.println("]\n");
+                break;
+
+
+
+           /*
+                -solveGA /home/oussama/IdeaProjects/SatHeuristicSolver/src/Problemes/SatProblem/Benchmarks/uf75-01.cnf
+                5 1000 20 100 20
+                int maxIterations,
+                int populationSize,
+                int crossoverRate,
+                int mutationRate,
+             */
+            case "-solveGA" :
+                System.out.println("[");
+
+                GAClauses cls = new GAClauses(args[1]) ;
+
+                for (int attempt = 0; attempt < Integer.parseInt(args[2]); attempt++) {
+                    if (attempt != 0) System.out.println(" , ");
+                    GAAlgorithm.searchGA(cls , Integer.parseInt(args[4]),Integer.parseInt(args[5])
+                            ,Integer.parseInt(args[6]) ,Integer.parseInt(args[3]), 120000) ;
                 }
                 System.out.println("]\n");
                 break;
