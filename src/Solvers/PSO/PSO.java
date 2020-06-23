@@ -26,10 +26,6 @@ public class PSO <T>{
             pBest = initSolution.randomSolution() ;
             velocity = ThreadLocalRandom.current().nextInt(problem.SOLUTION_SIZE);
         }
-        @Override
-        public String toString() {
-            return solution.Fitness() + "<->" +pBest.Fitness() +"<->" + velocity ;
-        }
     }
 
     /**
@@ -75,27 +71,25 @@ public class PSO <T>{
                 List<Integer> range =  IntStream.range(0,problem.SOLUTION_SIZE)
                                                 .boxed().collect(Collectors.toList());
                 Collections.shuffle(range);
-
                 for (int j = 0; j < p.velocity % problem.SOLUTION_SIZE; j++)
                     p.solution.update(range.get(j));
                 //
                 int particalFitness = p.solution.Fitness() ;
                 //Update pBest
                 if (p.pBest.Fitness() < particalFitness)
-                    p.pBest = p.solution ;
+                    p.pBest = p.solution.copy() ;
                 // Update Gbest
                 if (gBest.Fitness() < particalFitness)
                     gBest = p.solution.copy() ;
             }
-            int t = gBest.Fitness() ;
-            if (i%(maxIter/10) == 0)  evolution.addLast(t); ;
+            if (i%(maxIter/10) == 0)  evolution.addLast(gBest.Fitness()); ;
 //            if (gBest.isSolution(problem)) return gBest ;
         }
         // ------ Deliver results in JSON
         System.out.println(
             "{" +'\n'+
             " \"evol\" : "+ evolution + ",\n"+
-            " \"sol\" : " + " \"" + gBest + "\"" + '\n'+
+            " \"sol\" : " + " \"" + gBest + "\"," + '\n'+
             " \"fitness\" : " +  gBest.Fitness()   +'\n'+
             "} "
         );
